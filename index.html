@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Berryllium Software</title>
+  <link rel="icon" href="images/Icon.png" type="image/png" />
+  <style>
+    :root {
+      --font-family: Arial, sans-serif;
+      --bg-color: #f5f5f5;
+      --accent: #3b5998; /* deeper blueberry blue */
+      --neutral: #222;
+      --highlight: #8ab4f8; /* light blueberry highlight */
+      --hover-color: #d0e1ff; /* pale blue hover */
+      --desc-bg: #e3edff; /* very light blueberry background */
+      --desc-border: #3b5998; /* match accent for border */
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-color);
+      margin: 0;
+      padding: 0;
+      color: var(--neutral);
+    }
+
+    header {
+      background-color: white;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    #logo {
+      height: 40px;
+      width: auto;
+    }
+
+    #fakebox {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      background-color: white;
+      flex-grow: 1;
+      max-width: 600px;
+    }
+
+    #searchInput {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      font-family: var(--font-family);
+      color: var(--neutral);
+    }
+
+    .library-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .library-description {
+      background: var(--desc-bg);
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-left: 6px solid var(--desc-border);
+      border-radius: 5px;
+      font-size: 17px;
+      color: var(--accent);
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(59, 89, 152, 0.2);
+    }
+
+    .library-item {
+      background: white;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      border-left: 4px solid var(--accent);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border-radius: 5px;
+      font-weight: 600;
+      color: var(--neutral);
+      user-select: none;
+    }
+
+    .library-item:hover {
+      background-color: var(--hover-color);
+      border-left-color: var(--highlight);
+      color: var(--accent);
+    }
+
+    #notFound {
+      text-align: center;
+      font-weight: bold;
+      color: rgb(85, 82, 82);
+      margin-top: 20px;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      #fakebox {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="images/logo.png" id="logo" alt="Logo" />
+    <div id="fakebox">
+      <input type="text" id="searchInput" placeholder="Search it..." aria-label="Search it..." />
+    </div>
+  </header>
+
+  <div class="library-container">
+    <div class="library-description">
+      <p>Welcome to Berryllium Software. Where all our products can lighten your day with tech expertisese.</p>
+    </div>
+    <div class="library-item" data-url="Who_am_I.html">📘 Who am I?</div>
+    <div class="library-item" data-url="Features.html">✨ Features</div>
+    <div class="library-item" data-url="Products.html">⏹️ Products</div>
+    <div class="library-item" data-url="News_to_know.html">📰 News to know</div>
+    <div class="library-item" data-url="Forums.html">👥 Forums Community</div>
+    <div class="library-item" data-url="Contact.html">✉️ Contact</div>
+  </div>
+
+  <div id="notFound">Source Not Found</div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const items = document.querySelectorAll('.library-item');
+    const notFound = document.getElementById('notFound');
+
+    // Click to go to specific page
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const url = item.getAttribute('data-url');
+        if (url) {
+          window.location.href = url;
+        }
+      });
+    });
+
+    // Search filtering
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      let found = false;
+
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        const matches = text.includes(query);
+
+        item.style.display = matches ? "block" : "none";
+        if (matches) found = true;
+      });
+
+      notFound.style.display = found ? "none" : "block";
+    });
+  </script>
+
+</body>
+</html>
